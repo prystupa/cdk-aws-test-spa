@@ -8,12 +8,20 @@ export class ApiGatewayStack extends cdk.Stack {
 
         const api = new apigateway.RestApi(this, 'cdk-test-spa-api');
 
-        const deals = api.root.addResource('deals');
+        const deals = api.root.addResource('deals', {
+            defaultCorsPreflightOptions: {
+                allowOrigins: apigateway.Cors.ALL_ORIGINS,
+                allowMethods: apigateway.Cors.ALL_METHODS
+            }
+        });
         deals.addMethod('GET', new MockIntegration({
             integrationResponses: [{
                 statusCode: '200',
                 responseTemplates: {
                     'application/json': JSON.stringify([])
+                },
+                responseParameters: {
+                    'method.response.header.Access-Control-Allow-Origin': '\'*\''
                 }
             }],
             passthroughBehavior: PassthroughBehavior.NEVER,
@@ -21,7 +29,12 @@ export class ApiGatewayStack extends cdk.Stack {
                 'application/json': '{ "statusCode": 200 }',
             }
         }), {
-            methodResponses: [{statusCode: '200'}],
+            methodResponses: [{
+                statusCode: '200',
+                responseParameters: {
+                    'method.response.header.Access-Control-Allow-Origin': true
+                }
+            }],
         });
     }
 }
