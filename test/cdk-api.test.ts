@@ -5,7 +5,7 @@ import * as CdkApi from '../lib/cdk-api-stack';
 test('Empty Stack', () => {
     const app = new cdk.App();
     // WHEN
-    const stack = new CdkApi.CdkApiStack(app, 'MyTestStack');
+    const stack = new CdkApi.ApiGatewayStack(app, 'MyTestStack');
     // THEN
     expectCDK(stack).to(matchTemplate({
       "Resources": {}

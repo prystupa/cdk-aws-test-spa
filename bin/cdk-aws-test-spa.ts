@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from '@aws-cdk/core';
-import { CdkApiStack } from '../lib/cdk-api-stack';
+
+import { ApiGatewayStack } from '../lib/api-gateway-stack';
 
 const app = new cdk.App();
-new CdkApiStack(app, 'CdkApiStack');
+new ApiGatewayStack(app, 'cdk-test-api-gateway-stack');
